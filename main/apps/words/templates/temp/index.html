@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dojos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-6">
+            <h3>Welcome to Whats Your Name</h3>
+            <form action='session_words' method='post'>
+                {% csrf_token %}
+                <div class="form-group">
+                    Add a new word <br>
+                    <input style="width: 200px;" type="text" class="form-control" id="pwd" name="word">
+                </div>
+                <div class="radio">
+                    <input type="radio" value="red" name="color">Red
+                </div>
+                <div class="radio">
+                    <input type="radio" value="green" name="color">Green
+                </div>
+                <div class="radio disabled">
+                    <input type="radio" value="blue" name="color">Blue
+                </div>
+                <div class="checkbox">
+                    <input type='hidden' value='No' name='font'>
+                    <input type="checkbox" value="Yes" name='font'>show in big fonts
+                </div>
+                <button type="submit" class="btn btn-default">Add Session</button>
+            </form>
+        </div>
+        <div class="col-sm-6" style="margin-top: 15px;">
+            <a href="#" class="btn btn-danger" style="float:right;">clear session</a>
+            <br>
+            {% for dict in request.session.current_activity %}
+                {% if dict.font == 'Yes' %}
+                    {% if dict.color == 'red' %}
+                        <p><span style="color: red;">{{dict.word}}</span> - {{dict.time}}</p>
+                    {% elif dict.color == 'green' %}
+                        <p><span style="color: green;">{{dict.word}}</span> - {{dict.time}}</p>
+                    {% elif dict.color == 'blue' %}
+                        <p><span style="color: blue;">{{dict.word}}</span> - {{dict.time}}</p>
+                    {% endif %}
+                {% else %}
+                    {% if dict.color == 'red' %}
+                        <p><span style="color: red;">{{dict.word}}</span> - {{dict.time}}</p>
+                    {% elif dict.color == 'green' %}
+                        <p><span style="color: green;">{{dict.word}}</span> - {{dict.time}}</p>
+                    {% elif dict.color == 'blue' %}
+                        <p><span style="color: blue;">{{dict.word}}</span> - {{dict.time}}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <p><span style="color:red;">Word</span> - and some time</p>
+        </div>
+    </div>
+</body>
+</html>
